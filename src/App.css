@@ -1,0 +1,32 @@
+nav{
+  width: 40%;
+  display: flex;
+  gap: 20%;
+  justify-content: right;
+  padding-right: 10%;
+  align-items: center;
+}
+
+.quiz-setup{
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  background-color: aliceblue;
+  border-radius: 10px;
+  margin-left: 10%;
+  height: 40vh;
+  gap: 20px;
+  padding: 1rem;
+}
+
+.input-text{
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.btn{
+  padding: 0.5rem 1rem;
+  background-color: rgb(209, 170, 245);
+  margin-left: 10%;
+}
