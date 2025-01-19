@@ -1,101 +1,83 @@
-// import axios from 'axios'
-// import React, { useEffect, useState } from 'react'
-
-// const SetupQuiz = () => {
-//     const [quiz, setQuiz] = useState([])
-
-//     const fetchData = () => {
-//         axios.get("https://opentdb.com/api.php?amount=10&category=21&difficulty=hard&type=multiple")
-//             .then((res) => {
-//                 // console.log(res.data.results)
-//                 setQuiz(res.data.results);
-
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//             })
-//     }
-
-
-
-//     useEffect(() => {
-//         fetchData();
-//     }, [])
-
-//     return (
-//         <div>
-//             <h1>Home</h1>
-//             <ul>
-//                 {quiz.map((ele) => (
-//                     <li key={ele.id}>
-//                         <p>{ele.question}</p>
-//                     </li>
-//                 ))}
-//             </ul>
-//         </div>
-//     )
-// }
-
-// export default SetupQuiz
-
-import { Button } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QuizContext } from '../context/QuizProvider';
+import {
+  Box,
+  Heading,
+  VStack,
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Button,
+} from '@chakra-ui/react';
 
 const SetupQuiz = () => {
-    const { setQuizConfig, name, setName,questions } = useContext(QuizContext);
-    // const [name, setName] = useState("");
-    const [category, setCategory] = useState("5")
-    const [difficulty, setDifficulty] = useState("easy")
-    // const [questions, setQuestions] = useState(10);
-    const navigate = useNavigate();
+  const { setQuizConfig, name, setName, questions, setQuestions } =
+    useContext(QuizContext);
+  const [category, setCategory] = useState('9'); // Default to "General Knowledge"
+  const [difficulty, setDifficulty] = useState('easy');
+  const navigate = useNavigate();
 
-    const handleStartQuiz = () => {
-        setQuizConfig({ name, setName, category, difficulty, questions });
-        navigate("/quiz");
-    }
+  const handleStartQuiz = () => {
+    setQuizConfig({ category, difficulty, questions });
+    navigate('/quiz');
+  };
 
+  return (
+    <Box p={8} bg="gray.50" minH="100vh">
+      <VStack spacing={6} align="stretch" maxW="400px" mx="auto">
+        <Heading textAlign="center" mb={6}>
+          Quiz Setup
+        </Heading>
+        <FormControl>
+          <FormLabel>Name</FormLabel>
+          <Input
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Category</FormLabel>
+          <Select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="9">General Knowledge</option>
+            <option value="21">Sports</option>
+            <option value="23">History</option>
+            <option value="17">Science</option>
+            <option value="18">Computers</option>
+            </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Difficulty</FormLabel>
+          <Select
+            value={difficulty}
+            onChange={(e) => setDifficulty(e.target.value)}
+          >
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel>Number of Questions</FormLabel>
+          <Input
+            type="number"
+            min="1"
+            max="50"
+            value={questions}
+            onChange={(e) => setQuestions(e.target.value)}
+          />
+        </FormControl>
+        <Button colorScheme="teal" size="lg" onClick={handleStartQuiz}>
+          Start Quiz
+        </Button>
+      </VStack>
+    </Box>
+  );
+};
 
-    return (
-        <div>
-            <h1>Quiz Setup</h1>
-            <div className='quiz-setup'>
-                <div>
-                    <label>Name</label>
-                    <input className='input-text' type='text' placeholder='Enter name' value={name} onChange={(e) => setName(e.target.value)} />
-                </div>
-
-                <div>
-                    <label >Category</label>
-                    <select className='input-text' value={category} onChange={(e) => setCategory(e.target.value)}>
-                        <option value='1'>General Knowledge</option>
-                        <option value='2'>Music</option>
-                        <option value='3'>Computer</option>
-                        <option value='4'>Maths</option>
-                        <option value='5'>Hindi</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Difficulty</label>
-                    <select className='input-text' value={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-                        <option value='easy'>Low</option>
-                        <option value='medium'>Medium</option>
-                        <option value='hard'>Hard</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label>Number of Question</label>
-                    <input className='input-text' type='number' value={questions} min='1' max='20' onChange={(e) => setQuestions(e.target.value)} />
-                </div>
-
-            </div>
-            <Button className='btn' onClick={handleStartQuiz}>Start Quiz</Button>
-
-        </div>
-    )
-}
-
-export default SetupQuiz
+export default SetupQuiz;
